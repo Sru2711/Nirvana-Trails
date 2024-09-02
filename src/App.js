@@ -5,7 +5,7 @@ import { loadSlim } from "tsparticles-slim";
 import plane from "./assets/plane.png";
 import "./App.scss";
 import HomePage from "./components/HomePage";
-
+import CountriesStore from "./store/CountriesStore";
 const App = () => {
   const particlesInit = useCallback(async engine => {
     console.log(engine);
@@ -19,11 +19,13 @@ const App = () => {
   const particlesLoaded = useCallback(async container => {
     await console.log(container);
   }, []);
+  
+  const store = new CountriesStore();
 
-  return (
+  return ( 
 
     <>
-
+   
       <Particles
         id="tsparticles"
         init={particlesInit}
@@ -102,7 +104,7 @@ const App = () => {
         }}
       />
 
-      <HomePage />
+      <HomePage CountriesStore={store} />
 
     </>
 
