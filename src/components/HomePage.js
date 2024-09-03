@@ -7,21 +7,35 @@ import { Html5Qrcode } from 'html5-qrcode';
 import { motion } from 'framer-motion';
 import QrCode from './QrCode';
 import { getAllCountries as onGetAllCountries } from '../apiCall';
-
+import submit from "../assets/submit.jpeg"
 const HomePage = ({CountriesStore}) => {
 
   const [showModal, setShowModal] = useState(false)
   const [dataForQr, setDataForQr] = useState(null)
-  const [dropDownValue, setDropDownValue] = useState()
+  const [dropDownValues, setDropDownValues] = useState([])
+  const [option, setOption] =useState("")
+  
+  useEffect(() => {
+    let fetchData = async () => {
+      let countries = await CountriesStore.addCountries()
+      console.log("CountriesStore.addCountries()",countries)
+      setDropDownValues(countries || null )
+    }
+    return fetchData;
+  },[])
 
   const handleChange = (e) => {
-    setDropDownValue(e.target.value)
+    console.log("e.target.value",e.target.value)
+    setOption(e.target.value)
   }
-  console.log("%%%%",CountriesStore.addCountries())
 
-  // const handleGetAllCountries = () => {
-  //   onGetAllCountries();
-  // }
+const handleGetAllCountries = async() => {
+  console.log("$$$")
+  let qrDetails=await CountriesStore.getCountryDetails(option)
+  console.log("qrDetails",qrDetails)
+  setDataForQr(qrDetails);
+}
+
 
   return (
     <>
@@ -41,15 +55,21 @@ const HomePage = ({CountriesStore}) => {
                 <Col className="p-0 m-0 card-row2-col">
                  <div className="p-0 m-0 card-row2-col-div">
                  <Label className="dropdown-title">Select Country:</Label>
-                  <select className="dropdown-select" onChange={handleChange}>
-                    <option value="fruit" className="options">Fruit</option>
-                    <option value="vegetable">Vegetable</option>
-                    <option value="meat">Meat</option>
+                  <select className="dropdown-select" onChange={(e)=>handleChange(e)}>
+                  <option value={" "} className="options" disabled>Please Choose Country</option>
+                  {
+                     dropDownValues.map((dropDownValue,index) => {
+                        return (
+                          <option value={dropDownValue} className="options" key={index}>{dropDownValue}</option>
+                        )
+                    })
+                  }
+                   
                   </select>
                  </div >
                  <div className="button-div">
                  <Button className="submit-button " 
-                //  onClick={() => handleGetAllCountries()}
+                 onClick={() => handleGetAllCountries()}
                   >Submit</Button>
                  </div>
                   
@@ -57,13 +77,18 @@ const HomePage = ({CountriesStore}) => {
               </Row>
               <Row className="p-0 m-0 card-row3">
                 <Col className="p-2 m-0 card-col4">
-                  <QrCode className="QRCODE" CountriesStore={CountriesStore}></QrCode>
+                {
+                  dataForQr ?
+                  <QrCode className="QRCODE" dataForQr={dataForQr} ></QrCode> :
+                  <img src={submit} className="submit-img"></img>
+                }
+                 
                 </Col>
               </Row>
             </Card>
 
             <Row className="button-div pb-2">
-              <Button className="close-button" onClick={() => setShowModal(!showModal)}>
+              <Button className="close-button" onClick={() => {setShowModal(!showModal);setDataForQr()}}>
                 Close
               </Button>
             </Row>
