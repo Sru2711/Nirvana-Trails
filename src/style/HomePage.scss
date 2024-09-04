@@ -15,6 +15,21 @@ $transition-duration: 0.3s;
   display: flex;
   justify-content: center;
   align-items: center;
+  .span-btn{
+    width:0%;
+    height:10vh;
+    background: #fdfdfd97;
+    border-radius:5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+    
+  }
+
+ 
+
   .button-div {
     width:100%;
     .close-button {
@@ -27,27 +42,30 @@ $transition-duration: 0.3s;
   }
 }
 
+
 .start-button,.close-button {
-  width: 150px;
-  height: 30px;
-  border: 3px dashed $primary-color;
+  // width: 150px;
+  // height: 30px;
+  border: 2px dashed $font-color;
   background-color: $secondary-color;
   border-radius: $border-radius;
   color: $font-color;
   font-family: "Raleway", sans-serif;
   font-size: larger;
   font-weight: bold;
+  padding:10px 40px;
   cursor: pointer;
-  transition: background-color $transition-duration ease, border-color $transition-duration ease, transform 0.2s;
+  transition: all $transition-duration ease, border-color $transition-duration ease, transform 0.2s;
 
   &:hover {
     background-color: $primary-color;
     color: #ffffff;
     cursor:grab;
     border-color: darken($primary-color, 10%);
-    transform: scale(1.05);
+    transform: skewY(5deg);
   }
 }
+
 
 .main-modal {
   position: absolute;
@@ -241,33 +259,32 @@ $transition-duration: 0.3s;
         transition: 0.3s;
         border:2px solid $primary-color;
         cursor:grab;
-        background-color:#d9eef9;;
+        background-color:#d9eef9;
         box-shadow: 4px -5px 2px -2px $primary-color;
         transition:1s inherit;
         
       }
-      // .selectcountry-button{
-      //   width: 50%;
-      //   height: 50%;
-      //   border:none;
-      //   border:3px inset $primary-color;
-      //   background: rgb(108,201,250);
-      //   background: linear-gradient(34deg, rgba(108,201,250,1) 5%, rgba(188,224,243,1) 11%);
-      //   color: $font-color;
-      //   font-size: large;
-      //   font-weight: 700;
-      //   border-radius: 5%;
-      //   transition: 0.5s;
-      // }
-      // .selectcountry-button:hover {
-      //   transition: 0.3s;
-      //   border:2px solid $primary-color;
-      //   cursor:grab;
-      //   background-color:#d9eef9;;
-      //   box-shadow: 4px -5px 2px -2px $primary-color;
-      //   transition:1s inherit;
+      .selectcountry-button:disabled{
+        width: 50%;
+        height: 50%;
+        border:none;
+        border:3px inset $font-color;
+        background-color:#e2eef5 ;
+        color: $font-color;
+        font-size: large;
+        font-weight: 700;
+        border-radius: 5%;
+        transition:3s inherit;
+      }
+      .selectcountry-button:hover {
+        transition: 0.3s;
+        border:2px solid $primary-color;
+        cursor:not-allowed;
+        background-color:#d9eef9;;
+        box-shadow: 4px -5px 2px -2px $font-color;
         
-      // }
+        
+      }
     }
   }
  .card-row3{

@@ -4,7 +4,8 @@ import { Button, Card, Col, Label, Row } from 'reactstrap';
 import trails from "../assets/trails.png";
 import QrCode from './QrCode';
 import submit from "../assets/scangif.gif";
-import country from "../assets/country.png"
+import country from "../assets/country.png";
+
 const HomePage = ({CountriesStore}) => {
 
   const [showModal, setShowModal] = useState(false)
@@ -12,13 +13,14 @@ const HomePage = ({CountriesStore}) => {
   const [dropDownValues, setDropDownValues] = useState([])
   const [option, setOption] =useState("")
   
+  const fetchData = async () => {
+    let countries = await CountriesStore.addCountries()
+    setDropDownValues(countries || null )
+  }
+
   useEffect(() => {
-    let fetchData = async () => {
-      let countries = await CountriesStore.addCountries()
-      console.log("CountriesStore.addCountries()",countries)
-      setDropDownValues(countries || null )
-    }
-    return fetchData;
+    console.log("####")
+  fetchData();
   },[])
 
   const handleChange = (e) => {
@@ -27,9 +29,9 @@ const HomePage = ({CountriesStore}) => {
   }
 
 const handleGetAllCountries = async() => {
-  console.log("$$$")
+ 
   let qrDetails=await CountriesStore.getCountryDetails(option)
-  console.log("qrDetails",qrDetails)
+  
   setDataForQr(qrDetails);
 }
 
@@ -79,7 +81,7 @@ const handleGetAllCountries = async() => {
                      onClick={() => handleGetAllCountries()}
                       >{ "Submit"}
                       </Button> : 
-                      <Button className="selectcountry-buttonsubmit-button" 
+                      <Button className="selectcountry-button" 
                         disabled
                        >{ "Select Country"}
                        </Button>
@@ -108,9 +110,12 @@ const handleGetAllCountries = async() => {
           </div>
           :
           <div className="homePage-Row1">
-            <Button className="start-button" onClick={() => setShowModal(!showModal)}>
+           <span className="span-btn">
+           <Button className="start-button px-4" onClick={() => setShowModal(!showModal)}>
               Start
             </Button>
+           </span>
+            
           </div>
       }
     </>

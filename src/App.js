@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import Particles from "react-tsparticles";
 //import { loadFull } from "tsparticles"; // if you are going to use `loadFull`, install the "tsparticles" package too.
 import { loadSlim } from "tsparticles-slim";
@@ -6,13 +6,10 @@ import plane from "./assets/plane.png";
 import "./App.scss";
 import HomePage from "./components/HomePage";
 import CountriesStore from "./store/CountriesStore";
+
 const App = () => {
   const particlesInit = useCallback(async engine => {
-    console.log(engine);
-    // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
-    // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-    // starting from v2 you can add only the features you need reducing the bundle size
-    //await loadFull(engine);
+ 
     await loadSlim(engine);
   }, []);
 
@@ -21,6 +18,12 @@ const App = () => {
   }, []);
   
   const store = new CountriesStore();
+ useEffect(()=>{
+  console.log("!!!!");
+  return ()=>{console.log("@@@");
+    
+  }
+ },[])
 
   return ( 
 
@@ -35,8 +38,9 @@ const App = () => {
             color:
               "rgb(11,41,57)"
 
+
           },
-          fpsLimit: 50,
+          fpsLimit:50,
           interactivity: {
             events: {
               onClick: {
@@ -54,16 +58,17 @@ const App = () => {
                 quantity:0,
               },
 
+
             },
           },
           particles: {
             shape: {
-              type: "images",
+              type: "circle",
               image: [
                 {
                   src: plane,
-                  height: 50,
-                  width: 50,
+                  height:5,
+                  width:5,
                 }]
             },
             links: {
@@ -80,28 +85,30 @@ const App = () => {
                 default: "bounce",
               },
               random: false,
-              speed: 3,
+              speed:0.5,
               straight: false,
             },
             number: {
               density: {
                 enable: true,
-                area: 1000,
+                area: 800,
               },
               value: 80,
             },
             opacity: {
-              value: 1,
+              value:0.2,
             },
             // shape: {
             //     type: "circle",
             // },
             size: {
-              value: { min: 20, max: 20 },
+              value: { min: 2, max: 5 },
             },
           },
           detectRetina: true,
         }}
+
+
       />
 
       <HomePage CountriesStore={store} />
