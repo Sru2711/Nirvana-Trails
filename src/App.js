@@ -51,7 +51,7 @@ const App = () => {
             },
             modes: {
               push: {
-                quantity: 4,
+                quantity:0,
               },
 
             },
@@ -86,7 +86,7 @@ const App = () => {
             number: {
               density: {
                 enable: true,
-                area: 1500,
+                area: 1000,
               },
               value: 80,
             },

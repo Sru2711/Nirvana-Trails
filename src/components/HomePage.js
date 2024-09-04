@@ -2,12 +2,9 @@ import React, { useEffect, useState } from 'react'
 import "../style/HomePage.scss"
 import { Button, Card, Col, Label, Row } from 'reactstrap';
 import trails from "../assets/trails.png";
-import qrCode from "../assets/qr-code.png"
-import { Html5Qrcode } from 'html5-qrcode';
-import { motion } from 'framer-motion';
 import QrCode from './QrCode';
-import { getAllCountries as onGetAllCountries } from '../apiCall';
-import submit from "../assets/submit.jpeg"
+import submit from "../assets/scangif.gif";
+import country from "../assets/country.png"
 const HomePage = ({CountriesStore}) => {
 
   const [showModal, setShowModal] = useState(false)
@@ -47,16 +44,23 @@ const handleGetAllCountries = async() => {
                 <span className="card-title">
                   <span className="nirvanaspan">निर्वाण</span>
                   <span><img src={trails} className="img-trails" /></span>
-                  <span className="trailsspan"> Trails</span>
+                  <span className="trailsspan"> Trails</span> 
                 </span>
+                <div className="motto-div">
+                <span className="motto">देश का ज्ञान, एक क्यूआर में समाल</span>
+                </div>
+                
               </Row>
 
               <Row className="p-0 m-0 card-row2">
                 <Col className="p-0 m-0 card-row2-col">
                  <div className="p-0 m-0 card-row2-col-div">
-                 <Label className="dropdown-title">Select Country:</Label>
-                  <select className="dropdown-select" onChange={(e)=>handleChange(e)}>
-                  <option value={" "} className="options" disabled>Please Choose Country</option>
+                  <div className="country-div">
+                  <Label className="dropdown-title"><img src={country} className="country-img"/>Select Country:</Label>
+                  </div>
+                 
+                  <select className="dropdown-select" onChange={(e)=>handleChange(e)} placeholder="Please Choose Country">
+                  <option value={"dropDownValue"} className="default-options" >{"Please Select Country"}</option>
                   {
                      dropDownValues.map((dropDownValue,index) => {
                         return (
@@ -68,9 +72,18 @@ const handleGetAllCountries = async() => {
                   </select>
                  </div >
                  <div className="button-div">
-                 <Button className="submit-button " 
-                 onClick={() => handleGetAllCountries()}
-                  >Submit</Button>
+                 
+                   {
+                     option.length ? 
+                     <Button className="submit-button" 
+                     onClick={() => handleGetAllCountries()}
+                      >{ "Submit"}
+                      </Button> : 
+                      <Button className="selectcountry-buttonsubmit-button" 
+                        disabled
+                       >{ "Select Country"}
+                       </Button>
+                   } 
                  </div>
                   
                 </Col>
@@ -88,7 +101,7 @@ const handleGetAllCountries = async() => {
             </Card>
 
             <Row className="button-div pb-2">
-              <Button className="close-button" onClick={() => {setShowModal(!showModal);setDataForQr()}}>
+              <Button className="close-button" onClick={() => {setShowModal(!showModal);setDataForQr(); setOption("")}}>
                 Close
               </Button>
             </Row>
